@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--HomePage-->
+        <!--Home-->
         <scene sceneID="1vb-DT-uy6">
             <objects>
-                <viewController storyboardIdentifier="SecondView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5Bv-Ev-1NA" customClass="SecondViewController" customModule="Randomuser" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SecondView" title="Home" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5Bv-Ev-1NA" customClass="SecondViewController" customModule="Randomuser" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="H57-jj-al1"/>
                         <viewControllerLayoutGuide type="bottom" id="ptL-yz-1dp"/>
@@ -39,7 +39,7 @@
                         <color key="backgroundColor" red="0.93725490570000003" green="0.34901961679999999" blue="0.1921568662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" id="qQE-V6-teo"/>
-                    <navigationItem key="navigationItem" title="HomePage" id="W9T-VI-A21"/>
+                    <navigationItem key="navigationItem" id="W9T-VI-A21"/>
                     <connections>
                         <outlet property="emailIdLabel" destination="lpk-nM-9Cc" id="woG-jY-CnH"/>
                         <outlet property="userNameLabel" destination="4V2-2Z-DRf" id="Aj2-JG-rcB"/>
@@ -129,7 +129,7 @@
         <!--Settings-->
         <scene sceneID="HIb-wG-vVI">
             <objects>
-                <viewController storyboardIdentifier="ThirdView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CMv-3R-xXq" customClass="ThirdViewController" customModule="Randomuser" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ThirdView" title="Settings" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CMv-3R-xXq" customClass="ThirdViewController" customModule="Randomuser" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="RYQ-hM-IxH"/>
                         <viewControllerLayoutGuide type="bottom" id="nFs-rf-A37"/>
@@ -183,6 +183,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Wqu-ua-p7d"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="qXD-mH-i29">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
