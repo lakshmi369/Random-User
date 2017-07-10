@@ -22,10 +22,10 @@ class FirstViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
         super.viewDidLoad()
         var error : NSError?
         GGLContext.sharedInstance().configureWithError(&error)
-        
-        if error != nil {
+//        error == nil
+        guard error == nil else {
             print(error ?? "Some Error")
-            return
+            returnss
         }
         GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance().delegate = self as GIDSignInDelegate
@@ -41,7 +41,7 @@ class FirstViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
     }
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        if error != nil {
+        guard error == nil else {
             print(error ?? "Some Error")
             return
         }
