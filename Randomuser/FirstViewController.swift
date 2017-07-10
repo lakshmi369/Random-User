@@ -7,122 +7,62 @@
 //
 
 import UIKit
+import GoogleSignIn
+import Google
 
-class FirstViewController: UIViewController {
+
+class FirstViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate{
 
     
     
-    
-    @IBOutlet var nameField: UITextField!
-    
-    @IBOutlet var userIdField: UITextField!
-    
-    @IBOutlet var passwordField: UITextField!
     
     
     override func viewDidLoad() {
-        super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated: false)
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        super.viewDidLoad()
+        var error : NSError?
+        GGLContext.sharedInstance().configureWithError(&error)
+//        error == nil
+        guard error == nil else {
+            print(error ?? "Some Error")
+            returnss
+        }
+        GIDSignIn.sharedInstance().uiDelegate = self
+        GIDSignIn.sharedInstance().delegate = self as GIDSignInDelegate
+        
+        let signInButton = GIDSignInButton()
+        signInButton.center = view.center
+        //        signInButton.style = .standard
+        view.addSubview(signInButton)
+        
+        
+        
+        // Do any additional setup after loading the view, typically from a nib.
     }
     
-
-    @IBAction func gotoHomePage(_ sender: Any) {
-        
-        //For validating name TextField
-        let name = nameField.text
-        guard name != nil, name?.isEmpty == false else {
-            let a = UIAlertController(title: "Warning", message: "Username Field Cannot be empty", preferredStyle: .alert)
-            a.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-            self.present(a, animated: true, completion: nil)
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        guard error == nil else {
+            print(error ?? "Some Error")
             return
         }
         
         
-        let validname =  validateName(Name: name)
-        if validname {
-            print("Name is valid")
-        } else {
-            print("Name is not valid")
-            let invalidName = UIAlertController(title: "Warning", message: "Please enter valid name", preferredStyle:.alert)
-            invalidName.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-            self.present(invalidName, animated: true, completion: nil)
-        }
-        
-        
-        
-        
-        //For validating mailId Field
-        let emailId = userIdField.text
-        
-        guard emailId != nil  && emailId?.isEmpty == false else {
-            let emptyField = UIAlertController(title: "Alert", message: "EmailId Field cannot be empty", preferredStyle: .alert)
-            emptyField.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(emptyField, animated: true, completion: nil)
-            return
-        }
-        
-        
-        let validmail = validateEmail(candidate: emailId)
-        if validmail {
-            
-        } else {
-            let invalidId = UIAlertController(title: "Alert", message: "Please enter a valid EmailId", preferredStyle: .alert)
-            invalidId.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(invalidId, animated: true, completion: nil)
-        }
-        
-        
-        //For validating Password Field
-        let password = passwordField.text
-        guard (password?.characters.count)! > 4 else {
-            let invalidPass = UIAlertController(title: "Alert", message: "Min 5 characters required for password", preferredStyle: .alert)
-            invalidPass.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(invalidPass, animated: true, completion: nil)
-            return
-        }
-        
-        
-        
-        
-        if validname,validmail {
-            let def = UserDefaults.standard
-            def.set(name, forKey: "Name")
-            def.set(emailId, forKey: "EmailId")
-            let navigateToHome = self.storyboard?.instantiateViewController(withIdentifier: "TabView") as! TabViewController
-            navigationItem.hidesBackButton = true
-            
-            //            let backbutton = UIBarButtonItem(title: "", style: .plain, target: SecondViewController.self, action: nil)
-            //            navigationItem.leftBarButtonItem = backbutton
-            
-            self.navigationController?.pushViewController(navigateToHome, animated: true)
-            
-        }
-    }
-    
-    //function to check for valid mail
-    func validateEmail(candidate: String?) -> Bool {
-        
-        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        
-        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: candidate)
-    }
-    
-    //function to check for valid name
-    func validateName(Name: String?)-> Bool {
-        
-        let nameRegEx = "[A-Za-z]{2,200}"
-        return NSPredicate(format: "SELF MATCHES %@", nameRegEx).evaluate(with: Name)
-    }
    
+        guard let tabView = self.storyboard?.instantiateViewController(withIdentifier: "TabView") as? TabViewController else {
+                return
+        }
+        self.navigationController?.pushViewController(tabView, animated: true)
+        let userDetails =   UserDefaults.standard
+        userDetails.set(user.profile.email, forKey: "Email")
+        userDetails.set(user.profile.name, forKey: "Name")
+        //get the image in string format
+        if let imageURL = user.profile.imageURL(withDimension: 100) {
+            userDetails.set(imageURL, forKey: "imageURL")
+            print("UserDefault url :\(userDetails.set(imageURL, forKey: "imageURL"))")
+        }
         
-        
-    
 
+    }
+    
+    
 }
