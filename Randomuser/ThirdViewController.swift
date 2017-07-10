@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleSignIn
 
 class ThirdViewController: UIViewController {
 
@@ -24,13 +25,21 @@ class ThirdViewController: UIViewController {
     
 
     
-    @IBAction func goToLoginPage(_ sender: Any) {
+    
+    @IBAction func goToLogin(_ sender: Any) {
         
         
-        let navigateToLogin = self.storyboard?.instantiateViewController(withIdentifier: "FirstView") as! FirstViewController
-        self.navigationController?.pushViewController(navigateToLogin, animated: true) 
+       
+        guard let navigateToLogin = self.storyboard?.instantiateViewController(withIdentifier: "FirstView") as? FirstViewController else {
+            return
+        }
+        self.navigationController?.pushViewController(navigateToLogin, animated: true)
+         GIDSignIn.sharedInstance().signOut()
         
-        
-        
+
     }
+
+
+
+
 }
